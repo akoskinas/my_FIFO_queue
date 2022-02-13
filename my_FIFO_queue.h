@@ -13,4 +13,5 @@ private:
     int start{0};
     int stop{0}; 
     int my_array[maxSize]{0};
+    bool fullQueue{false};
 };

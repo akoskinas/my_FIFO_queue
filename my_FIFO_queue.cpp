@@ -2,41 +2,58 @@
 
 //includes
 #include <iostream>
-#include <stdlib.h>   // for the random ints to be entered in the queue    
 #include "my_FIFO_queue.h"
 
 bool myFifoQueue::enqueue(int element)
 {
-    if ((stop+1)%maxSize != start)
+    if (fullQueue)
+    {
+        return false;
+    }
+    else // queue is NOT full
     {
         my_array[stop] = element;
         stop=(stop+1)%maxSize;
-        return true;
-    } else {
-        return false;
+        if (start == stop)
+        {
+            fullQueue = true;
+        }
+        return true;        
     }
 }
 
 int* myFifoQueue::dequeue()
 {   
-    // to-do: change the next statement after
     int* temp_ptr{nullptr};
-    if (start != stop)
+    if ((start != stop) || fullQueue)
     {
         temp_ptr = &(my_array[start]);
         start = (start+1)%maxSize;
+        fullQueue = false;
     }
     return temp_ptr;
     
 }
 int myFifoQueue::getFifoQueueSize() const
 {
-    if (start<=stop)
+    if (start<stop)
     {
         return stop-start;
-    } else
+    }
+    else if (stop < start)
     {
         return maxSize - (start-stop);
+    }
+    else // stop==start
+    {
+        if (fullQueue)
+        {
+            return maxSize;
+        }
+        else
+        {
+            return 0;
+        }
     }
 }
 

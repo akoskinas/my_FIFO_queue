@@ -23,6 +23,7 @@
 
 //includes
 #include <iostream>
+#include <stdlib.h>             // for the random ints to be entered in the queue
 #include "my_FIFO_queue.h"
 
 int main()
